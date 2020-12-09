@@ -66,11 +66,15 @@
 <script src="script.js"></script>
 
 <script>
+
 let cloud = true;
 let userId = window.localStorage.getItem("userId");
 let dbrefObject;
 
+
+
 if(cloud){
+    //execute using cloud storage
   
   // Your web app's Firebase configuration
   // For Firebase JS SDK v7.20.0 and later, measurementId is optional
@@ -93,6 +97,7 @@ if(cloud){
 
   if (userId == null){
       login();
+      
   } else {
     dbrefObject = firebase.database().ref('/' + userId + "/Books");
       execute();
@@ -127,17 +132,18 @@ function login(){
 }
 
 } else {
+    //execute using localStorage
     execute();
 }
 
 function logout(){
     firebase.auth().signOut().then(function() {
         window.localStorage.removeItem("userId")
+        window.location.reload(true);
   // Sign-out successful.
 }).catch(function(error) {
   // An error happened.
 });
-
 }
 
   
