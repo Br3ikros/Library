@@ -172,7 +172,7 @@ function removeBookFromLocalStorage(book) {
 }
 
 function removeBookFromCloud(title){
-    firebase.database().ref("Books/" + title).remove();
+    firebase.database().ref(userId + "/Books/" + title).remove();
 }
 
 function addBookToDocument(book) {
@@ -185,7 +185,7 @@ function addBookToLocalStorage(book) {
 }
 
 function addBookToCloud(book){
-    firebase.database().ref("Books/" +book.title).set({
+    firebase.database().ref(userId + "/Books/" +book.title).set({
         author: book.author,
         pageN: book.pageN,
         read: book.read

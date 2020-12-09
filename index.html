@@ -63,9 +63,11 @@
 
 <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
 
+<script src="script.js"></script>
+
 <script>
 let cloud = true;
-let userId;
+let userId = window.localStorage.getItem("userId");
 let dbrefObject;
 
 if(cloud){
@@ -89,7 +91,12 @@ if(cloud){
 
   var provider = new firebase.auth.GoogleAuthProvider();
 
-  login();
+  if (userId == null){
+      login();
+  } else {
+    dbrefObject = firebase.database().ref('/' + userId + "/Books");
+      execute();
+  }
 
 function login(){
     firebase.auth().signInWithPopup(provider).then(function(result) {
@@ -100,6 +107,8 @@ function login(){
 
   //set global user id to current user is
   userId = user.uid;
+
+  window.localStorage.setItem("userId", userId);
 
   dbrefObject = firebase.database().ref('/' + userId + "/Books");
 
@@ -121,9 +130,18 @@ function login(){
     execute();
 }
 
+function logout(){
+    firebase.auth().signOut().then(function() {
+        window.localStorage.removeItem("userId")
+  // Sign-out successful.
+}).catch(function(error) {
+  // An error happened.
+});
+
+}
+
   
 </script>
 
-    <script src="script.js"></script>
 </body>
 </html>
