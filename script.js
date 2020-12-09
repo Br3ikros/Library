@@ -8,6 +8,8 @@ class Book {
     }
 }
 
+function execute(){
+
 let editedBook = null;
 let addButton = document.querySelector("button");
 let submitEditButton = document.querySelector(".edit-form button");
@@ -211,4 +213,5 @@ function switchForms(){
     addForm.classList.toggle("hidden");
     let editForm = document.querySelector(".edit-form");
     editForm.classList.toggle("hidden");
+}
 }
