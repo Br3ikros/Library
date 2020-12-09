@@ -1,0 +1,72 @@
+* {
+    box-sizing: border-box;
+}
+
+.container-flex {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    font-size: 20px;
+    width: 80%;
+}
+
+form {
+    position: fixed;
+    right: 10px;
+    top: 10px;
+    height: 300px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+#read {
+    align-self: start;
+}
+
+.book {
+    height: 300px;
+    width: 200px;
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    padding-right: 5px;
+    padding-left: 5px;
+    background-color: green;
+    border-radius: 3%;
+    margin-top: 20px;
+    margin-bottom: 20px;
+    text-align:center;
+}
+
+.book-options {
+    display: flex;
+    width: 100%;
+}
+
+.edit-button {
+    width: 50%;
+}
+
+.remove-button {
+    width: 50%;
+}
+
+.hidden {
+    display: none;
+}
+
+.big-text {
+    font-size: 1em;
+}
+
+.small-text {
+    font-size: 0.8em;
+}
+
+.small-italic-text {
+    font-size: 0.8em;
+    font-style: italic;
+}

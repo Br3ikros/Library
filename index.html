@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <div class = "container-flex">
+
+    </div>
+    <div class = "add-book-panel">
+        <form action="" class="add-form">
+            <label for="title">
+                Title
+            </label>
+            <input type="text" name="title" id="title">
+            <label for="author">
+                Author
+            </label>
+            <input type="text" name="author" id="author">
+            <label for="total pages">
+                Total pages
+            </label>
+            <input type="text" name="total pages" id="total pages" >
+            <label for="read">
+                Read?
+            </label>
+            <input class ="checkbox" type="checkbox" name="read" id="read">
+            <button type="button"> Add Book</button>
+        </form>
+
+        <form action="" class="edit-form hidden">
+            <label for="title">
+                Title
+            </label>
+            <input type="text" name="title" id="title">
+            <label for="author">
+                Author
+            </label>
+            <input type="text" name="author" id="author">
+            <label for="total pages">
+                Total pages
+            </label>
+            <input type="text" name="total pages" id="total pages" >
+            <label for="read">
+                Read?
+            </label>
+            <input class ="checkbox" type="checkbox" name="read" id="read">
+            <button type="button"> Submit </button>
+        </form>
+    </div>
+
+    <!-- The core Firebase JS SDK is always required and must be listed first -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase.js"></script>
+
+<!-- TODO: Add SDKs for Firebase products that you want to use
+     https://firebase.google.com/docs/web/setup#available-libraries -->
+<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+
+<script>
+
+let cloud = true;
+let dbrefObject;
+
+if(cloud){
+  
+  // Your web app's Firebase configuration
+  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+  var firebaseConfig = {
+    apiKey: "AIzaSyA0X19QAogkCtnpyuhSOmU1PEc3BxlPRe0",
+    authDomain: "test1-baeb8.firebaseapp.com",
+    databaseURL: "https://test1-baeb8-default-rtdb.firebaseio.com",
+    projectId: "test1-baeb8",
+    storageBucket: "test1-baeb8.appspot.com",
+    messagingSenderId: "1020522077885",
+    appId: "1:1020522077885:web:bda71b3a957f83c038e1d4",
+    measurementId: "G-2N6EXFF98P"
+  };
+
+
+  // Initialize Firebase
+  firebase.initializeApp(firebaseConfig);
+  
+  dbrefObject = firebase.database().ref().child("Books");
+}
+
+  
+</script>
+
+    <script src="script.js"></script>
+</body>
+</html>
