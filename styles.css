@@ -13,7 +13,7 @@
 form {
     position: fixed;
     right: 10px;
-    top: 10px;
+    top: 90px;
     height: 300px;
     width: 200px;
     display: flex;
@@ -69,4 +69,22 @@ form {
 .small-italic-text {
     font-size: 0.8em;
     font-style: italic;
+}
+
+nav{
+    width:90%;
+    margin:0 auto;
+}
+
+ul{
+    width:100%;
+    display:flex;
+    justify-content:flex-end;
+    align-content:center;
+    align-items:center;
+    list-style-type:none;
+}
+
+li{
+    margin:20px;
 }

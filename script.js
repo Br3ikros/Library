@@ -11,8 +11,9 @@ class Book {
 function execute(){
 
 let editedBook = null;
-let addButton = document.querySelector("button");
+let addButton = document.querySelector(".add-button");
 let submitEditButton = document.querySelector(".edit-form button");
+
 
 if (cloud){
     populateHtmlFromCloud();
