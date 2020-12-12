@@ -52,7 +52,7 @@ submitEditButton.addEventListener("click", function () {
     //update the template value of the current book being edited to the ones of the EditForm book
     editedBook.template.children[1].innerText = newBook.title;
     editedBook.template.children[2].innerText = newBook.author;
-    editedBook.template.children[3].innerText = "Page Number: " + newBook.pageN;
+    editedBook.template.children[3].innerText = newBook.pageN;
     editedBook.template.children[4].innerText = "Read? " + (newBook.read ? "yes" : "no");
 
     //as editing is done at this point, set the add form back to visible and the edit form to hidden
@@ -142,7 +142,7 @@ function getHtmlBookTemplate(book) {
     author.innerText = book.author;
     author.classList.add("small-italic-text");
     const pageN = document.createElement("p");
-    pageN.innerText = "Page Number: " + book.pageN;
+    pageN.innerText = book.pageN;
     pageN.classList.add("small-text");
     const read = document.createElement("p");
     read.innerText = "Read? " + (book.read ? "yes" : "no");
