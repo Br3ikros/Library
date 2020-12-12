@@ -68,7 +68,7 @@ form {
     margin-bottom: 20px;
     text-align:center;
     animation: expand .5s ease-in-out;
-    box-shadow: 3px 3px 3px gray;
+    border:2px solid black;
 
 }
 
