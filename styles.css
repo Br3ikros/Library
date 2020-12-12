@@ -25,6 +25,15 @@ form {
     align-self: start;
 }
 
+@keyframes expand {
+    from {
+      transform: scale(0);
+      opacity: 0;
+      background: #5470B0;
+    }
+  }
+
+
 .book {
     height: 300px;
     width: 200px;
@@ -40,6 +49,7 @@ form {
     margin-top: 20px;
     margin-bottom: 20px;
     text-align:center;
+    animation: expand .5s ease-in-out;
 }
 
 .book:hover{
