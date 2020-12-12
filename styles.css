@@ -12,15 +12,16 @@ body{
     display:flex;
     flex-direction:column;
     align-items:center;
-    right: 10px;
-    top: 90px;
+    top: 85px;
     height:1000px;
     width: 300px;
-    background-color: gray;
+    background-color: rgb(218, 218, 218);
+    box-shadow: 2px 0 2px -2px gray;
 }
 
 .container-flex {
     margin-top:100px;
+    margin-left:400px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -61,12 +62,14 @@ form {
     margin:30px;
     padding-right: 5px;
     padding-left: 5px;
-    background-color: green;
+    background-color: #2196F3;
     border-radius: 3%;
     margin-top: 20px;
     margin-bottom: 20px;
     text-align:center;
     animation: expand .5s ease-in-out;
+    box-shadow: 0 0 3px gray;
+
 }
 
 .book:hover{
@@ -105,9 +108,11 @@ form {
 
 nav{
     width:100%;
+    height:85px;
     position:fixed;
     top:0;
-    background-color:blue;
+    background-color: #2196F3;
+    box-shadow: 0 2px 2px -2px gray;
 }
 
 ul{
@@ -167,11 +172,11 @@ li{
 }
 
 input:checked + .slider {
-  background-color: #2196F3;
+  background-color:  #2196F3;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px #2196F3;
+  box-shadow: 0 0 1px  #2196F3;
 }
 
 input:checked + .slider:before {
