@@ -77,7 +77,9 @@ form {
 }
 
 .book-options {
+  margin-top:5px;
     display: flex;
+    justify-content:space-between;
     width: 100%;
 }
 
@@ -193,3 +195,13 @@ input:checked + .slider:before {
 .slider.round:before {
   border-radius: 50%;
 } 
+
+.edit-button{
+  width:25px;
+  height:25px;
+}
+
+.remove-button{
+  width:25px;
+  height:25px;
+}

@@ -106,7 +106,9 @@ function getHtmlBookTemplate(book) {
     let bookOptions = document.createElement("div");
     bookOptions.classList.add("book-options");
 
-    let editButton = document.createElement("button");
+    let editButton = document.createElement("input");
+    editButton.type = "image";
+    editButton.src = "settings.png"
     editButton.innerText = "Edit"
     editButton.classList.add("edit-button");
     editButton.addEventListener("click", function () {
@@ -117,7 +119,9 @@ function getHtmlBookTemplate(book) {
         populateForm(book);
     })
 
-    let removeButton = document.createElement("button");
+    let removeButton = document.createElement("input");
+    removeButton.type = "image";
+    removeButton.src = "bin.png" 
     removeButton.innerText = "Remove";
     removeButton.classList.add("remove-button");
     removeButton.addEventListener("click", function () {
