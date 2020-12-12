@@ -2,7 +2,25 @@
     box-sizing: border-box;
 }
 
+body{
+    margin:0;
+    padding:0;
+}
+
+.add-book-panel{
+    position:fixed;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    right: 10px;
+    top: 90px;
+    height:1000px;
+    width: 300px;
+    background-color: gray;
+}
+
 .container-flex {
+    margin-top:100px;
     display: flex;
     flex-wrap: wrap;
     justify-content: flex-start;
@@ -11,9 +29,8 @@
 }
 
 form {
-    position: fixed;
-    right: 10px;
-    top: 90px;
+    position: relative;
+    top:20px;
     height: 300px;
     width: 200px;
     display: flex;
@@ -87,21 +104,24 @@ form {
 }
 
 nav{
-    width:90%;
-    margin:0 auto;
+    width:100%;
+    position:fixed;
+    top:0;
+    background-color:blue;
 }
 
 ul{
-    width:100%;
     display:flex;
     justify-content:flex-end;
     align-content:center;
     align-items:center;
     list-style-type:none;
+    margin:0;
+    padding:0;
 }
 
 li{
-    margin:20px;
+    margin:25px;
 }
 
 
