@@ -30,10 +30,14 @@ function execute() {
 
         if (cloud) {
             addBookToCloud(book);
+            updateInfoVariables(book, true);
+            updateInfoSection();
 
 
         } else {
             //add book object to local storage
+            updateInfoVariables(book, true);
+            updateInfoSection();
             addBookToLocalStorage(book);
 
 
@@ -84,6 +88,8 @@ function execute() {
                 let book = JSON.parse(window.localStorage.getItem(key));
                 if (book != null && book != undefined) {
                     book.template = getHtmlBookTemplate(book);
+                    updateInfoVariables(book, true);
+                    updateInfoSection();
                     addBookToDocument(book);
 
 
@@ -103,6 +109,8 @@ function execute() {
                 book.read = childNodes.val().read
                 book.template = getHtmlBookTemplate(book);
                 addBookToDocument(book);
+                updateInfoVariables(book, true);
+                updateInfoSection();
 
 
             });
@@ -136,12 +144,14 @@ function execute() {
         removeButton.addEventListener("click", function () {
             if (cloud) {
 
-
+                updateInfoVariables(book, false);
+                updateInfoSection();
                 removeBookFromCloud(book.title);
                 book.template.remove();
             } else {
                 //this block and the above could go after as a single block
-
+                updateInfoVariables(book, false);
+                updateInfoSection();
                 removeBookFromLocalStorage(book);
                 book.template.remove();
             }

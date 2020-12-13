@@ -72,6 +72,7 @@
     </div>
     <br>
 
+
   </div>
 
   <!-- The core Firebase JS SDK is always required and must be listed first -->
@@ -90,7 +91,8 @@
 
     let cloud = true;
     let userId = window.localStorage.getItem("userId");
-    let userName = window.localStorage.getItem("userName");;
+    let userName = window.localStorage.getItem("userName");
+    let photoUrl = window.localStorage.getItem("photoUrl");
     let dbrefObject;
     let totalBooks = 0;
     let totalPages = 0;
@@ -164,10 +166,16 @@
 
           userName = user.displayName; // userName = user.email;
 
+          photoUrl = user.photoURL;
+
           console.log(user);
 
           window.localStorage.setItem("userId", userId);
           window.localStorage.setItem("userName", userName);
+          window.localStorage.setItem("photoUrl", photoUrl);
+
+          console.log(photoUrl);
+
 
           dbrefObject = firebase.database().ref('/' + userId + "/Books");
 
@@ -200,6 +208,7 @@
       firebase.auth().signOut().then(function () {
         window.localStorage.removeItem("userId")
         window.localStorage.removeItem("userName")
+        window.localStorage.removeItem("photoUrl");
         removeUserNameFromDOM();
         window.location.reload(true);
         // Sign-out successful.
@@ -214,6 +223,13 @@
       userNameLiElement.innerText = userName;
       userNameLiElement.classList.add("user-name");
       navUL.insertBefore(userNameLiElement, navUL.firstChild)
+
+      let profileImg = document.createElement("img");
+      profileImg.classList.add("profile-img");
+      profileImg.setAttribute("src", photoUrl);
+      let imgLi = document.createElement("li");
+      imgLi.append(profileImg)
+      navUL.insertBefore(imgLi,navUL.firstChild)
     }
 
     function removeUserNameFromDOM() {
@@ -225,16 +241,25 @@
       let totalBooksP = document.querySelector(".total-books");
       totalBooksP.innerText = "Total books: " + totalBooks;
       let totalBooksReadP = document.querySelector(".total-books-read");
-      totalBooksReadP.innerText = "Books Read: " + totalBooksRead;
+      totalBooksReadP.innerText = "Books read: " + totalBooksRead;
       let totalPagesP = document.querySelector(".total-pages-read");
-      totalPagesP.innerText = "Pages Read: " + totalPages;
+      totalPagesP.innerText = "Total pages: " + totalPages;
     }
 
     //this should get called only when a book is added or removed, not after it's edited
     //the logic for editing should be you call the editpageN and subtract or add the difference between the old n of pages and the new one,
     //whereas if the book has changed from read to not or viceversa decrease or increase the totalbooksread
-    function updateInfoVariables(book, increase) {
-
+    function updateInfoVariables(book, add) {
+      if (add){
+        totalBooks += 1;
+        totalPages += Number(book.pageN);
+        totalBooksRead += Number(book.read ? 1 : 0)
+      } else {
+        totalBooks -= 1;
+        totalPages -= Number(book.pageN);
+        totalBooksRead += Number(book.read ? -1 : 0)
+      }
+    
     }
 
 
