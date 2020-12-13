@@ -43,6 +43,20 @@ form {
     align-self: start;
 }
 
+@keyframes highlight{
+  from{
+    background-color: #FF5613;
+  }
+  to{
+    background-color: rgb(218, 218, 218);
+  }
+}
+
+.edit-form{
+  animation: highlight .5s linear;
+  border-radius:5px;
+}
+
 @keyframes expand {
     from {
       transform: scale(0);
