@@ -1,214 +1,245 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Library</title>
-    <link rel="stylesheet" href="styles.css">
-    <link rel="shortcut icon" href="#" />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Library</title>
+  <link rel="stylesheet" href="styles.css">
+  <link rel="shortcut icon" href="#" />
 </head>
+
 <body>
-    <nav>
-        <ul>
-            <li><button class="login-out" type="button">login</button></li>
-        </ul>
-    </nav>
-    <div class = "container-flex">
+  <nav>
+    <ul>
+      <li><button class="login-out" type="button">login</button></li>
+    </ul>
+  </nav>
+  <div class="container-flex">
 
+  </div>
+  <div class="add-book-panel">
+    <form action="" class="add-form">
+      <label for="title">
+        Title
+      </label>
+      <input type="text" name="title" id="title">
+      <label for="author">
+        Author
+      </label>
+      <input type="text" name="author" id="author">
+      <label for="total pages">
+        Total pages
+      </label>
+      <input type="text" name="total pages" id="total pages">
+
+      <label for="checkbox">Read</label>
+      <label class="switch">
+        <input type="checkbox" class="checkbox" id="checkbox">
+        <span class="slider round"></span>
+      </label>
+
+      <button type="button" class="add-button"> Add Book</button>
+    </form>
+
+    <form action="" class="edit-form hidden">
+      <label for="title">
+        Title
+      </label>
+      <input type="text" name="title" id="title">
+      <label for="author">
+        Author
+      </label>
+      <input type="text" name="author" id="author">
+      <label for="total pages">
+        Total pages
+      </label>
+      <input type="text" name="total pages" id="total pages">
+
+      <label for="checkbox">Read</label>
+      <label class="switch">
+        <input type="checkbox" class="checkbox" id="checkbox">
+        <span class="slider round"></span>
+      </label>
+
+      <button type="button"> Submit </button>
+    </form>
+    <br>
+    <div class="info">
+      <p class="total-books">Total books: </p>
+      <p class="total-pages-read">Total pages: </p>
+      <p class="total-books-read">Books read: </p>
     </div>
-    <div class = "add-book-panel">
-        <form action="" class="add-form">
-            <label for="title">
-                Title
-            </label>
-            <input type="text" name="title" id="title">
-            <label for="author">
-                Author
-            </label>
-            <input type="text" name="author" id="author">
-            <label for="total pages">
-                Total pages
-            </label>
-            <input type="text" name="total pages" id="total pages">
+    <br>
 
-            <label for="checkbox">Read</label>
-            <label class="switch">
-                <input type="checkbox" class="checkbox" id ="checkbox">
-                <span class="slider round"></span>
-              </label>
+  </div>
 
-            <button type="button" class="add-button"> Add Book</button>
-        </form>
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase.js"></script>
 
-        <form action="" class="edit-form hidden">
-            <label for="title">
-                Title
-            </label>
-            <input type="text" name="title" id="title">
-            <label for="author">
-                Author
-            </label>
-            <input type="text" name="author" id="author">
-            <label for="total pages">
-                Total pages
-            </label>
-            <input type="text" name="total pages" id="total pages">
-
-            <label for="checkbox">Read</label>
-             <label class="switch">
-                <input type="checkbox" class="checkbox" id ="checkbox">
-                <span class="slider round"></span>
-              </label>
-              
-            <button type="button"> Submit </button>
-        </form>
-    </div>
-
-    <!-- The core Firebase JS SDK is always required and must be listed first -->
-<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase.js"></script>
-
-<!-- TODO: Add SDKs for Firebase products that you want to use
+  <!-- TODO: Add SDKs for Firebase products that you want to use
      https://firebase.google.com/docs/web/setup#available-libraries -->
 
-<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-analytics.js"></script>
 
-<script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/8.1.2/firebase-auth.js"></script>
 
-<script src="script.js"></script>
+  <script src="script.js"></script>
 
-<script>
+  <script>
 
-let cloud = true;
-let userId = window.localStorage.getItem("userId");
-let userName = window.localStorage.getItem("userName");;
-let dbrefObject;
-
-
-
-if(cloud){
-    //execute using cloud storage
-  
-  // Your web app's Firebase configuration
-  // For Firebase JS SDK v7.20.0 and later, measurementId is optional
-  var firebaseConfig = {
-    apiKey: "AIzaSyA0X19QAogkCtnpyuhSOmU1PEc3BxlPRe0",
-    authDomain: "test1-baeb8.firebaseapp.com",
-    databaseURL: "https://test1-baeb8-default-rtdb.firebaseio.com",
-    projectId: "test1-baeb8",
-    storageBucket: "test1-baeb8.appspot.com",
-    messagingSenderId: "1020522077885",
-    appId: "1:1020522077885:web:bda71b3a957f83c038e1d4",
-    measurementId: "G-2N6EXFF98P"
-  };
+    let cloud = true;
+    let userId = window.localStorage.getItem("userId");
+    let userName = window.localStorage.getItem("userName");;
+    let dbrefObject;
+    let totalBooks = 0;
+    let totalPages = 0;
+    let totalBooksRead = 0;
 
 
-  // Initialize Firebase
-  firebase.initializeApp(firebaseConfig);
 
-  var provider = new firebase.auth.GoogleAuthProvider();
+    if (cloud) {
+      //execute using cloud storage
 
-  let loginOutButton = document.querySelector(".login-out");
+      // Your web app's Firebase configuration
+      // For Firebase JS SDK v7.20.0 and later, measurementId is optional
+      var firebaseConfig = {
+        apiKey: "AIzaSyA0X19QAogkCtnpyuhSOmU1PEc3BxlPRe0",
+        authDomain: "test1-baeb8.firebaseapp.com",
+        databaseURL: "https://test1-baeb8-default-rtdb.firebaseio.com",
+        projectId: "test1-baeb8",
+        storageBucket: "test1-baeb8.appspot.com",
+        messagingSenderId: "1020522077885",
+        appId: "1:1020522077885:web:bda71b3a957f83c038e1d4",
+        measurementId: "G-2N6EXFF98P"
+      };
 
-  
-  if(userId == null){
-    loginOutButton.innerText = "login";
-    loginOutButton.classList.add("login");
-    loginOutButton.value = "login";
-  } else {
-    loginOutButton.innerText = "logout";
-      loginOutButton.classList.add("logout");
-      loginOutButton.value = "logout";
-      addUserNameToDOM();
-      dbrefObject = firebase.database().ref('/' + userId + "/Books");
-      execute();
-      // make login-out user button's innerText "logout"
-      //make class of login-logout button equal to .logout
-      //if class is equal to logout, call logout when pressed, if not call login
-  }
 
-  loginOutButton.addEventListener("click", function(){
-      if (loginOutButton.value == "login"){
-          login();
+      // Initialize Firebase
+      firebase.initializeApp(firebaseConfig);
+
+      var provider = new firebase.auth.GoogleAuthProvider();
+
+      let loginOutButton = document.querySelector(".login-out");
+
+
+      if (userId == null) {
+        loginOutButton.innerText = "login";
+        loginOutButton.classList.add("login");
+        loginOutButton.value = "login";
       } else {
+        loginOutButton.innerText = "logout";
+        loginOutButton.classList.add("logout");
+        loginOutButton.value = "logout";
+        addUserNameToDOM();
+        dbrefObject = firebase.database().ref('/' + userId + "/Books");
+        execute();
+        // make login-out user button's innerText "logout"
+        //make class of login-logout button equal to .logout
+        //if class is equal to logout, call logout when pressed, if not call login
+      }
+
+      loginOutButton.addEventListener("click", function () {
+        if (loginOutButton.value == "login") {
+          login();
+        } else {
           logout();
           loginOutButton.innerText = "login";
-      loginOutButton.classList.add("login");
-      loginOutButton.value = "login";
+          loginOutButton.classList.add("login");
+          loginOutButton.value = "login";
+        }
+      })
+
+
+
+      function login() {
+        firebase.auth().signInWithPopup(provider).then(function (result) {
+          // This gives you a Google Access Token. You can use it to access the Google API.
+          var token = result.credential.accessToken;
+          // The signed-in user info.
+          var user = result.user;
+
+          //set global user id to current user is
+          userId = user.uid;
+
+          userName = user.displayName; // userName = user.email;
+
+          console.log(user);
+
+          window.localStorage.setItem("userId", userId);
+          window.localStorage.setItem("userName", userName);
+
+          dbrefObject = firebase.database().ref('/' + userId + "/Books");
+
+          addUserNameToDOM();
+
+          loginOutButton.innerText = "logout";
+          loginOutButton.classList.add("logout");
+          loginOutButton.value = "logout";
+
+          execute();
+          // ...
+        }).catch(function (error) {
+          // Handle Errors here.
+          var errorCode = error.code;
+          var errorMessage = error.message;
+          // The email of the user's account used.
+          var email = error.email;
+          // The firebase.auth.AuthCredential type that was used.
+          var credential = error.credential;
+          // ...
+        });
       }
-  })
 
+    } else {
+      //execute using localStorage
+      execute();
+    }
 
-
-function login(){
-    firebase.auth().signInWithPopup(provider).then(function(result) {
-  // This gives you a Google Access Token. You can use it to access the Google API.
-  var token = result.credential.accessToken;
-  // The signed-in user info.
-  var user = result.user;
-
-  //set global user id to current user is
-  userId = user.uid;
-
-  userName = user.displayName; // userName = user.email;
-
-  console.log(user);
-
-  window.localStorage.setItem("userId", userId);
-  window.localStorage.setItem("userName", userName);
-
-  dbrefObject = firebase.database().ref('/' + userId + "/Books");
-
-  addUserNameToDOM();
-
-  loginOutButton.innerText = "logout";
-    loginOutButton.classList.add("logout");
-    loginOutButton.value = "logout";
-
-  execute();
-  // ...
-}).catch(function(error) {
-  // Handle Errors here.
-  var errorCode = error.code;
-  var errorMessage = error.message;
-  // The email of the user's account used.
-  var email = error.email;
-  // The firebase.auth.AuthCredential type that was used.
-  var credential = error.credential;
-  // ...
-});
-}
-
-} else {
-    //execute using localStorage
-    execute();
-}
-
-function logout(){
-    firebase.auth().signOut().then(function() {
+    function logout() {
+      firebase.auth().signOut().then(function () {
         window.localStorage.removeItem("userId")
         window.localStorage.removeItem("userName")
         removeUserNameFromDOM();
         window.location.reload(true);
-  // Sign-out successful.
-}).catch(function(error) {
-  // An error happened.
-});
-}
+        // Sign-out successful.
+      }).catch(function (error) {
+        // An error happened.
+      });
+    }
 
-function addUserNameToDOM(){
-    let navUL = document.querySelector("ul");
+    function addUserNameToDOM() {
+      let navUL = document.querySelector("ul");
       let userNameLiElement = document.createElement("li");
       userNameLiElement.innerText = userName;
       userNameLiElement.classList.add("user-name");
       navUL.insertBefore(userNameLiElement, navUL.firstChild)
-}
+    }
 
-function removeUserNameFromDOM(){
-    let userNameLi = document.querySelector(".user-name");
-    userNameLi.remove();
-}
-  
-</script>
+    function removeUserNameFromDOM() {
+      let userNameLi = document.querySelector(".user-name");
+      userNameLi.remove();
+    }
+
+    function updateInfoSection() {
+      let totalBooksP = document.querySelector(".total-books");
+      totalBooksP.innerText = "Total books: " + totalBooks;
+      let totalBooksReadP = document.querySelector(".total-books-read");
+      totalBooksReadP.innerText = "Books Read: " + totalBooksRead;
+      let totalPagesP = document.querySelector(".total-pages-read");
+      totalPagesP.innerText = "Pages Read: " + totalPages;
+    }
+
+    //this should get called only when a book is added or removed, not after it's edited
+    //the logic for editing should be you call the editpageN and subtract or add the difference between the old n of pages and the new one,
+    //whereas if the book has changed from read to not or viceversa decrease or increase the totalbooksread
+    function updateInfoVariables(book, increase) {
+
+    }
+
+
+  </script>
 
 </body>
+
 </html>
