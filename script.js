@@ -51,6 +51,9 @@ function execute() {
         let newBook = createBookFromHtml("edit");
         let oldTitle = editedBook.title;
 
+        //removes book pages and number to the add the updated one later on
+        updateInfoVariables(editedBook, false);
+
 
         //update the values of the current book being edited to the ones of the EditForm book
         editedBook.title = newBook.title;
@@ -70,11 +73,15 @@ function execute() {
         switchForms();
 
         if (cloud) {
+            updateInfoVariables(newBook, true);
+            updateInfoSection()
             //remove book from database
             removeBookFromCloud(oldTitle);
             //add new book
             addBookToCloud(editedBook);
         } else {
+            updateInfoVariables(newBook, true);
+            updateInfoSection()
             // add edited book to local storage
             window.localStorage.removeItem(oldTitle);
             window.localStorage.setItem(editedBook.title, JSON.stringify(editedBook));
@@ -181,8 +188,21 @@ function execute() {
         read.addEventListener("click", function () {
             inputElement.checked = !inputElement.checked;
             book.read = inputElement.checked;
+
+            if (book.read){
+                totalBooksRead += 0.5;
+                updateInfoSection();
+                console.log("true section");
+            } else {
+                totalBooksRead -= 0.5;
+                updateInfoSection();
+                console.log("false section")
+                
+            }
             addBookToCloud(book);
         });
+
+        
         const span = document.createElement("span");
         span.classList.add("slider");
         span.classList.add("round")
