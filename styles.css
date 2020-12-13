@@ -131,7 +131,7 @@ li{
     margin:25px;
 }
 
-
+/* #12F493   #FF5613
 
  /* The switch - the box around the slider */
 .switch {
@@ -156,7 +156,7 @@ li{
   left: 0;
   right: 0;
   bottom: 0;
-  background-color: #ccc;
+  background-color: #FF5613;
   -webkit-transition: .4s;
   transition: .4s;
 }
@@ -174,11 +174,11 @@ li{
 }
 
 input:checked + .slider {
-  background-color:  #2196F3;
+  background-color: #12F493;
 }
 
 input:focus + .slider {
-  box-shadow: 0 0 1px  #2196F3;
+  box-shadow: 0 0 1px  #12F493;
 }
 
 input:checked + .slider:before {

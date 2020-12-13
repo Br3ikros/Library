@@ -53,7 +53,9 @@ submitEditButton.addEventListener("click", function () {
     editedBook.template.children[1].innerText = newBook.title;
     editedBook.template.children[2].innerText = newBook.author;
     editedBook.template.children[3].innerText = newBook.pageN;
-    editedBook.template.children[4].innerText = "Read? " + (newBook.read ? "yes" : "no");
+    editedBook.template.children[4].children[0].checked = newBook.read;
+    
+    console.log( editedBook.template.children[4].children[0].checked)
 
     //as editing is done at this point, set the add form back to visible and the edit form to hidden
     switchForms();
@@ -148,9 +150,28 @@ function getHtmlBookTemplate(book) {
     const pageN = document.createElement("p");
     pageN.innerText = book.pageN;
     pageN.classList.add("small-text");
-    const read = document.createElement("p");
-    read.innerText = "Read? " + (book.read ? "yes" : "no");
-    read.classList.add("small-text");
+
+    const read = document.createElement("label");
+    read.classList.add("switch");
+    const inputElement = document.createElement("input");
+    inputElement.type = "checkbox";
+    inputElement.classList.add("checkbox");
+    inputElement.checked = (book.read ? true : false)
+    read.addEventListener("click", function(){
+        inputElement.checked = !inputElement.checked;
+        book.read = inputElement.checked;
+        addBookToCloud(book);
+
+    });
+    const span = document.createElement("span");
+    span.classList.add("slider");
+    span.classList.add("round")
+    read.append(inputElement);
+    read.append(span);
+
+    // const read = document.createElement("p");
+    // read.innerText = "Read? " + (book.read ? "yes" : "no");
+    // read.classList.add("small-text");
 
     template.append(bookOptions);
     template.append(title);
