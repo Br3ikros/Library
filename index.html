@@ -11,6 +11,8 @@
 
 <body>
   <nav>
+    <h1 style="flex:1;">My Book Collection</h1>
+    
     <ul>
       <li><button class="login-out" type="button">login</button></li>
     </ul>
@@ -19,19 +21,19 @@
 
   </div>
   <div class="add-book-panel">
-    <form action="" class="add-form">
+    <form class="add-form">
       <label for="title">
         Title
       </label>
-      <input type="text" name="title" id="title">
+      <input type="text" name="title" id="title" required>
       <label for="author">
         Author
       </label>
-      <input type="text" name="author" id="author">
+      <input type="text" name="author" id="author"  required>
       <label for="total pages">
         Total pages
       </label>
-      <input type="text" name="total pages" id="total pages">
+      <input type="text" name="total pages" id="total pages" required>
 
       <label for="checkbox">Read</label>
       <label class="switch">
@@ -42,19 +44,19 @@
       <button type="button" class="add-button"> Add Book</button>
     </form>
 
-    <form action="" class="edit-form hidden">
+    <form  class="edit-form hidden">
       <label for="title">
         Title
       </label>
-      <input type="text" name="title" id="title">
+      <input type="text" name="title" id="title" required>
       <label for="author">
         Author
       </label>
-      <input type="text" name="author" id="author">
+      <input type="text" name="author" id="author" required>
       <label for="total pages">
         Total pages
       </label>
-      <input type="text" name="total pages" id="total pages">
+      <input type="text" name="total pages" id="total pages" required>
 
       <label for="checkbox">Read</label>
       <label class="switch">

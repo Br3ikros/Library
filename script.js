@@ -23,6 +23,8 @@ function execute() {
 
 
     addButton.addEventListener("click", function () {
+
+        if(inputsAreValid("add")){
         //create book object
         let book = createBookFromHtml("add");
         //create book template from the book object
@@ -44,9 +46,12 @@ function execute() {
         }
         //add book template to document
         addBookToDocument(book);
+    }
     })
 
     submitEditButton.addEventListener("click", function () {
+
+        if (inputsAreValid("edit")){
         //create a book object from the EditForm input values
         let newBook = createBookFromHtml("edit");
         let oldTitle = editedBook.title;
@@ -87,6 +92,7 @@ function execute() {
             window.localStorage.setItem(editedBook.title, JSON.stringify(editedBook));
         }
 
+    }
     })
 
     function populateHtmlFromLocalStorage() {
@@ -279,5 +285,36 @@ function execute() {
         addForm.classList.toggle("hidden");
         let editForm = document.querySelector(".edit-form");
         editForm.classList.toggle("hidden");
+    }
+
+    function inputsAreValid(form){
+        let currentForm;
+
+
+
+        if (form == "add"){
+            currentForm = document.querySelector(".add-form");
+        } else {
+            currentForm = document.querySelector(".edit-form");
+        }
+
+        let elements = currentForm.elements;
+
+        for (let i = 0; i< 3; i++){
+            if (elements.item(i).value == null || elements.item(i).value == undefined || elements.item(i).value == "" ){
+                return false;
+            }
+        }
+        
+
+        console.log("boia");
+
+        //first convert the string to a Number, which can either return a nubmer or NaN, then check if it is an integer
+        if (!Number.isInteger(Number(elements.item(2).value))){
+            return false;
+        }
+
+        return true;
+        
     }
 }
