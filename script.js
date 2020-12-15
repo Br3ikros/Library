@@ -63,7 +63,7 @@ function execute() {
         //update the values of the current book being edited to the ones of the EditForm book
         editedBook.title = newBook.title;
         editedBook.author = newBook.author;
-        editedBookpageN = newBook.pageN;
+        editedBook.pageN = newBook.pageN;
         editedBook.read = newBook.read;
 
         //update the template value of the current book being edited to the ones of the EditForm book
@@ -71,11 +71,11 @@ function execute() {
         editedBook.template.children[2].innerText = newBook.author;
         editedBook.template.children[3].innerText = newBook.pageN;
         editedBook.template.children[4].children[0].checked = newBook.read;
-
         console.log(editedBook.template.children[4].children[0].checked)
 
         //as editing is done at this point, set the add form back to visible and the edit form to hidden
         switchForms();
+        
 
         if (cloud) {
             updateInfoVariables(newBook, true);
@@ -205,7 +205,11 @@ function execute() {
                 console.log("false section")
                 
             }
+            if (cloud){
             addBookToCloud(book);
+            } else {
+                addBookToLocalStorage(book);
+            }
         });
 
         
@@ -283,6 +287,7 @@ function execute() {
     function switchForms() {
         let addForm = document.querySelector(".add-form");
         addForm.classList.toggle("hidden");
+        clearForm(addForm);
         let editForm = document.querySelector(".edit-form");
         editForm.classList.toggle("hidden");
     }
@@ -316,5 +321,12 @@ function execute() {
 
         return true;
         
+    }
+
+    function clearForm(form){
+        form.elements.item(0).value = "";
+        form.elements.item(1).value = "";
+        form.elements.item(2).value = "";
+        form.elements.item(3).checked = false;
     }
 }
