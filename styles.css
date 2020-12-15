@@ -99,6 +99,8 @@ form {
   text-align: center;
   animation: expand .5s ease-in-out;
   border: 2px solid black;
+  box-shadow: 0 0 5px #777;
+  
 }
 
 .book .switch {
@@ -107,7 +109,11 @@ form {
 
 .book:hover {
   scale: 1.1;
+  -webkit-box-shadow: 0 10px 6px -6px #777;
+  -moz-box-shadow: 0 10px 6px -6px #777;
+       box-shadow: 0 10px 6px -6px #777;
 }
+
 
 .book-options {
   margin-top: 5px;
