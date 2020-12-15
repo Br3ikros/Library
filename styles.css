@@ -83,8 +83,8 @@ form {
 }
 
 .book {
-  height: 300px;
-  width: 200px;
+  height: 330px;
+  width: 230px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -134,7 +134,8 @@ form {
 }
 
 .big-text {
-  font-size: 1em;
+  font-size: 1.2em;
+  
 }
 
 .small-text {
