@@ -24,90 +24,89 @@ function execute() {
 
     addButton.addEventListener("click", function () {
 
-        if(inputsAreValid("add")){
-        //create book object
-        let book = createBookFromHtml("add");
-        //create book template from the book object
-        book.template = getHtmlBookTemplate(book);
+        if (inputsAreValid("add")) {
+            //create book object
+            let book = createBookFromHtml("add");
+            //create book template from the book object
+            book.template = getHtmlBookTemplate(book);
 
-        if (cloud) {
-            addBookToCloud(book);
-            updateInfoVariables(book, true);
-            updateInfoSection();
-
-
-        } else {
-            //add book object to local storage
-            updateInfoVariables(book, true);
-            updateInfoSection();
-            addBookToLocalStorage(book);
+            if (cloud) {
+                addBookToCloud(book);
+                updateInfoVariables(book, true);
+                updateInfoSection();
 
 
+            } else {
+                //add book object to local storage
+                updateInfoVariables(book, true);
+                updateInfoSection();
+                addBookToLocalStorage(book);
+
+            }
+            //add book template to document
+            addBookToDocument(book);
         }
-        //add book template to document
-        addBookToDocument(book);
-    }
     })
 
+
+    ///////dio cane ////////
     submitEditButton.addEventListener("click", function () {
 
-        if (inputsAreValid("edit")){
-        //create a book object from the EditForm input values
-        let newBook = createBookFromHtml("edit");
-        let oldTitle = editedBook.title;
+        if (inputsAreValid("edit")) {
+            //create a book object from the EditForm input values
+            let newBook = createBookFromHtml("edit");
+            let oldBook = JSON.parse(JSON.stringify(editedBook));
+            console.log(oldBook.title);
 
-        //removes book pages and number to the add the updated one later on
-        updateInfoVariables(editedBook, false);
+            //removes book pages and number to the add the updated one later on
+            updateInfoVariables(editedBook, false);
 
 
-        //update the values of the current book being edited to the ones of the EditForm book
-        editedBook.title = newBook.title;
-        editedBook.author = newBook.author;
-        editedBook.pageN = newBook.pageN;
-        editedBook.read = newBook.read;
+            //update the values of the current book being edited to the ones of the EditForm book
+            editedBook.title = newBook.title;
+            editedBook.author = newBook.author;
+            editedBook.pageN = newBook.pageN;
+            editedBook.read = newBook.read;
 
-        //update the template value of the current book being edited to the ones of the EditForm book
-        editedBook.template.children[1].innerText = newBook.title;
-        editedBook.template.children[2].innerText = newBook.author;
-        editedBook.template.children[3].innerText = newBook.pageN;
-        editedBook.template.children[4].children[0].checked = newBook.read;
-        console.log(editedBook.template.children[4].children[0].checked)
+            //update the template value of the current book being edited to the ones of the EditForm book
+            editedBook.template.children[1].innerText = newBook.title;
+            editedBook.template.children[2].innerText = newBook.author;
+            editedBook.template.children[3].innerText = newBook.pageN;
+            editedBook.template.children[4].children[0].checked = newBook.read;
+            console.log(editedBook.template.children[4].children[0].checked)
 
-        //as editing is done at this point, set the add form back to visible and the edit form to hidden
-        switchForms();
-        
+            //as editing is done at this point, set the add form back to visible and the edit form to hidden
+            switchForms();
 
-        if (cloud) {
-            updateInfoVariables(newBook, true);
-            updateInfoSection()
-            //remove book from database
-            removeBookFromCloud(oldTitle);
-            //add new book
-            addBookToCloud(editedBook);
-        } else {
-            updateInfoVariables(newBook, true);
-            updateInfoSection()
-            // add edited book to local storage
-            window.localStorage.removeItem(oldTitle);
-            window.localStorage.setItem(editedBook.title, JSON.stringify(editedBook));
+
+            if (cloud) {
+                updateInfoVariables(newBook, true);
+                updateInfoSection()
+                //remove book from database
+                removeBookFromCloud(oldBook.title);
+                //add new book
+                addBookToCloud(editedBook);
+            } else {
+                updateInfoVariables(newBook, true);
+                updateInfoSection()
+                // add edited book to local storage
+                removeBookFromLocalStorage(oldBook);
+                addBookToLocalStorage(editedBook)
+              
+            }
+
         }
-
-    }
     })
 
     function populateHtmlFromLocalStorage() {
-        if (window.localStorage.length > 0) {
-            for (var key in window.localStorage) {
-                let book = JSON.parse(window.localStorage.getItem(key));
-                if (book != null && book != undefined) {
-                    book.template = getHtmlBookTemplate(book);
-                    updateInfoVariables(book, true);
-                    updateInfoSection();
-                    addBookToDocument(book);
-
-
-                }
-            }
+        let titles = JSON.parse(window.localStorage.getItem("localStorageBooks"))
+        if (titles != null) {
+            titles.forEach(function (book) {
+                book.template = getHtmlBookTemplate(book);
+                updateInfoVariables(book, true);
+                updateInfoSection();
+                addBookToDocument(book);
+            })
         }
     }
 
@@ -195,7 +194,7 @@ function execute() {
             inputElement.checked = !inputElement.checked;
             book.read = inputElement.checked;
 
-            if (book.read){
+            if (book.read) {
                 totalBooksRead += 0.5;
                 updateInfoSection();
                 console.log("true section");
@@ -203,16 +202,17 @@ function execute() {
                 totalBooksRead -= 0.5;
                 updateInfoSection();
                 console.log("false section")
-                
+
             }
-            if (cloud){
-            addBookToCloud(book);
+            if (cloud) {
+                addBookToCloud(book);
             } else {
+                removeBookFromLocalStorage(book);
                 addBookToLocalStorage(book);
             }
         });
 
-        
+
         const span = document.createElement("span");
         span.classList.add("slider");
         span.classList.add("round")
@@ -244,7 +244,13 @@ function execute() {
     }
 
     function removeBookFromLocalStorage(book) {
-        window.localStorage.removeItem(book.title);
+        let titles = JSON.parse(window.localStorage.getItem("localStorageBooks"));
+        for (let i = 0; i < titles.length; i++) {
+            if (titles[i].title == book.title) {
+                titles.splice(i, 1);
+            }
+        }
+        window.localStorage.setItem("localStorageBooks", JSON.stringify(titles));
     }
 
     function removeBookFromCloud(title) {
@@ -257,7 +263,15 @@ function execute() {
     }
 
     function addBookToLocalStorage(book) {
-        window.localStorage.setItem(book.title, JSON.stringify(book));
+        let titles = JSON.parse(window.localStorage.getItem("localStorageBooks"));
+        if (titles != null){
+        titles.push(book);
+        window.localStorage.setItem("localStorageBooks", JSON.stringify(titles));
+        } else {
+            titles = [];
+            titles.push(book);
+            window.localStorage.setItem("localStorageBooks", JSON.stringify(titles));
+        }
     }
 
     function addBookToCloud(book) {
@@ -292,12 +306,12 @@ function execute() {
         editForm.classList.toggle("hidden");
     }
 
-    function inputsAreValid(form){
+    function inputsAreValid(form) {
         let currentForm;
 
 
 
-        if (form == "add"){
+        if (form == "add") {
             currentForm = document.querySelector(".add-form");
         } else {
             currentForm = document.querySelector(".edit-form");
@@ -305,25 +319,25 @@ function execute() {
 
         let elements = currentForm.elements;
 
-        for (let i = 0; i< 3; i++){
-            if (elements.item(i).value == null || elements.item(i).value == undefined || elements.item(i).value == "" ){
+        for (let i = 0; i < 3; i++) {
+            if (elements.item(i).value == null || elements.item(i).value == undefined || elements.item(i).value == "") {
                 return false;
             }
         }
-        
+
 
         console.log("boia");
 
         //first convert the string to a Number, which can either return a nubmer or NaN, then check if it is an integer
-        if (!Number.isInteger(Number(elements.item(2).value))){
+        if (!Number.isInteger(Number(elements.item(2).value))) {
             return false;
         }
 
         return true;
-        
+
     }
 
-    function clearForm(form){
+    function clearForm(form) {
         form.elements.item(0).value = "";
         form.elements.item(1).value = "";
         form.elements.item(2).value = "";
