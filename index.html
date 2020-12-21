@@ -91,20 +91,14 @@
   <script>
 
     let cloud = JSON.parse(window.localStorage.getItem("cloud"));
-    if (cloud == true){
+    if (cloud == true || cloud == null){
       cloud = true;
       let switchModeButton = document.querySelector(".switch-mode");
-      console.log("boia");
       switchModeButton.innerText = "Switch to Local"
     } else if (cloud == false){
       let switchModeButton = document.querySelector(".switch-mode");
       switchModeButton.innerText = "Switch to Cloud"
       let loginButton = document.querySelector(".login-out");
-      loginButton.classList.add("hidden");
-    } else {
-      cloud = false;
-      let switchModeButton = document.querySelector(".switch-mode");
-      switchModeButton.innerText = "Switch to Cloud"
       loginButton.classList.add("hidden");
     }
 
