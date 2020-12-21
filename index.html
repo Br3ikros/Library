@@ -99,10 +99,13 @@
     } else if (cloud == false){
       let switchModeButton = document.querySelector(".switch-mode");
       switchModeButton.innerText = "Switch to Cloud"
+      let loginButton = document.querySelector(".login-out");
+      loginButton.classList.add("hidden");
     } else {
       cloud = false;
       let switchModeButton = document.querySelector(".switch-mode");
       switchModeButton.innerText = "Switch to Cloud"
+      loginButton.classList.add("hidden");
     }
 
     let switchModeButton = document.querySelector(".switch-mode");
@@ -124,15 +127,6 @@
     let totalPages = 0;
     let totalBooksRead = 0;
 
-    
-    let loginOutButton = document.querySelector(".login-out");
-    loginOutButton.addEventListener("click", function (){
-      if (cloud == false){
-        cloud = true;
-        window.localStorage.setItem("cloud", true);
-        window.location.reload(true);
-      }
-    });
 
 
 
