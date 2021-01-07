@@ -56,7 +56,7 @@ function execute() {
             //create a book object from the EditForm input values
             let newBook = createBookFromHtml("edit");
             let oldBook = JSON.parse(JSON.stringify(editedBook));
-            console.log(oldBook.title);
+          
 
             //removes book pages and number to the add the updated one later on
             updateInfoVariables(editedBook, false);
@@ -73,7 +73,7 @@ function execute() {
             editedBook.template.children[2].innerText = newBook.author;
             editedBook.template.children[3].innerText = newBook.pageN;
             editedBook.template.children[4].children[0].checked = newBook.read;
-            console.log(editedBook.template.children[4].children[0].checked)
+         
 
             //as editing is done at this point, set the add form back to visible and the edit form to hidden
             switchForms();
@@ -112,7 +112,8 @@ function execute() {
 
     function populateHtmlFromCloud() {
         dbrefObject.once("value", function (snap) {
-            console.log(snap.val());
+            console.log(snap);
+            
             snap.forEach(function (childNodes) {
                 let book = new Book();
                 book.title = childNodes.key
@@ -123,8 +124,6 @@ function execute() {
                 addBookToDocument(book);
                 updateInfoVariables(book, true);
                 updateInfoSection();
-
-
             });
         });
     }
@@ -197,11 +196,11 @@ function execute() {
             if (book.read) {
                 totalBooksRead += 0.5;
                 updateInfoSection();
-                console.log("true section");
+            
             } else {
                 totalBooksRead -= 0.5;
                 updateInfoSection();
-                console.log("false section")
+              
 
             }
             if (cloud) {
@@ -325,8 +324,6 @@ function execute() {
             }
         }
 
-
-        console.log("boia");
 
         //first convert the string to a Number, which can either return a nubmer or NaN, then check if it is an integer
         if (!Number.isInteger(Number(elements.item(2).value))) {
